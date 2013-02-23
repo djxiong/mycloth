@@ -1,0 +1,2 @@
+# Module com.hros.vaadin.widgetset.MyclothWidgetset
+# RPC service class, partial path of RPC policy file

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.user.dao.RoleMenuDao" >  
+    	<resultMap id="menuResult" type="RoleMenu">
+		<id property="roleMenuID" column="roleMenuID"></id>
+		<result property="roleID" column="roleID"></result>
+		<result property="menuID" column="menuID"></result>
+	</resultMap>
+	
+     
+    <!-- 查询该菜单所有的角色 -->
+    <select id="selectRolesForMenu" parameterType="int" resultType="RoleMenu">
+    	select * from roleMenuMap where menuID=#{menuID}
+    </select>
+    
+    <!-- 查询属于本角色(roleID)的所有菜单 -->
+    <select id="selectMenusForRole" parameterType="int" resultType="RoleMenu">
+    	select * from roleMenuMap where roleID=#{roleID}
+    </select>
+    
+    <insert id="insertRoleMenu" parameterType="RoleMenu" useGeneratedKeys="true" keyProperty="roleMenuID">
+    	Insert into roleMenuMap (roleID,menuID) values (#{roleID}, #{menuID})
+    </insert>
+    
+    <delete id="deleteMenusForRole" parameterType="java.util.Map">
+    	Delete from roleMenuMap where roleID=#{roleID} and menuID in 
+    	<foreach collection="menuIDs" index="index" item="item" open="(" separator="," close=")">
+            #{item.menuID}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteRoleMenu" parameterType="int">
+    	Delete from roleMenuMap where roleMenuID=#{roleMenuID}
+    </delete>
+    
+    <delete id="deleteRoleMenuByRoleID" parameterType="int">
+    	Delete from roleMenuMap where roleID=#{roleID}
+    </delete>
+    
+    <delete id="deleteRoleMenuByMenuID" parameterType="int">
+    	Delete from roleMenuMap where menuID=#{menuID}
+    </delete>
+    
+    <delete id="deleteRoleAndMenu" parameterType="java.util.Map">
+    	Delete from roleMenuMap where roleID=#{roleID} and menuID=#{menuID}
+    </delete>
+    
+    <insert id="insertRoleMenuBatch" parameterType="java.util.List">
+    	Insert into roleMenuMap (roleID,menuID) values 
+    	<foreach collection="list" item="obj" index="index" separator="," >
+    		(#{obj.roleID}, #{obj.menuID})
+    	</foreach>
+    </insert>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.insurance.dao.InsuranceHistoryDao" >  
+    <resultMap id="insuranceHistoryResult" type="InsuranceHistory">
+		<id property="insuranceHistoryID" column="insuranceHistoryID"></id>
+		<result property="detail.insuranceDetailName" column="insuranceDetailName"></result>
+		<result property="detail.base" column="base"></result>
+		<result property="detail.companyRate" column="companyRate"></result>
+		<result property="detail.personalRate" column="personalRate"></result>
+		<result property="payDate" column="payDate"></result>
+		<result property="destDate" column="destDate"></result>
+		<result property="staffManageID" column="staffManageID"></result>
+		
+	</resultMap>
+	
+    <select id="getInsuranceHistoryByID"  parameterType="int" resultType= "InsuranceHistory">  
+        select * from InsuranceHistory where insuranceHistoryID=#{insuranceHistoryID}
+    </select>
+    
+    <select id="getInsuranceDetailByHistoryID"  parameterType="int" resultType= "InsuranceDetail">  
+        select * from InsuranceHistory where insuranceHistoryID=#{insuranceHistoryID}
+    </select>
+    
+    <update id="updateInsuranceHistory" parameterType="InsuranceHistory">
+    	Update InsuranceHistory set 
+    	insuranceDetailName=#{detail.insuranceDetailName},
+    	base=#{detail.base},
+    	companyRate=#{detail.companyRate},
+    	personalRate=#{detail.personalRate},
+    	staffManageID=#{staffManageID},
+    	payDate=#{payDate},
+    	destDate=#{destDate}
+    	where insuranceHistoryID=#{insuranceHistoryID}
+    </update>
+    
+    <insert id="insertInsuranceHistory" parameterType="InsuranceHistory" useGeneratedKeys="true" keyProperty="insuranceHistoryID">
+    	Insert into InsuranceHistory (insuranceDetailName,base,companyRate,personalRate,staffManageID,payDate,destDate) values (#{detail.insuranceDetailName}, #{detail.base},#{detail.companyRate}, #{detail.personalRate}, #{staffManageID},#{payDate},#{destDate})
+    </insert>
+    
+    <delete id="deleteInsuranceHistory" parameterType="int">
+    	Delete from InsuranceHistory where insuranceHistoryID=#{insuranceHistoryID}
+    </delete>
+    
+    <select id="selectHistorysForStaffManage"  parameterType="int" resultType= "InsuranceHistory">  
+        select * from InsuranceHistory where staffManageID=#{staffManageID}
+    </select>
+    
+   
+    
+   
+</mapper>

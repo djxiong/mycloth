@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.insurance.dao.InsuranceDetailDao" >  
+    <resultMap id="insuranceDetailResult" type="InsuranceDetail">
+		<id property="insuranceDetailID" column="insuranceDetailID"></id>
+		<result property="insuranceDetailName" column="insuranceDetailName"></result>
+		<result property="base" column="base"></result>
+		<result property="companyRate" column="companyRate"></result>
+		<result property="personalRate" column="personalRate"></result>
+		<result property="insuranceID" column="insuranceID"></result>
+		
+		
+		
+	</resultMap>
+	
+    <select id="getInsuranceDetailByID"  parameterType="int" resultType= "InsuranceDetail">  
+        select * from InsuranceDetail where insuranceDetailID=#{insuranceDetailID}
+    </select>
+    
+    
+    
+    <update id="updateInsuranceDetail" parameterType="InsuranceDetail">
+    	Update InsuranceDetail set 
+    	insuranceDetailName=#{insuranceDetailName},
+    	base=#{base},
+    	companyRate=#{companyRate},
+    	personalRate=#{personalRate},
+    	insuranceID=#{insuranceID}
+    	where insuranceDetailID=#{insuranceDetailID}
+    </update>
+    
+    <insert id="insertInsuranceDetail" parameterType="InsuranceDetail" useGeneratedKeys="true" keyProperty="insuranceDetailID">
+    	Insert into InsuranceDetail (insuranceDetailName,base,companyRate,personalRate,insuranceID) values (#{insuranceDetailName}, #{base},#{companyRate}, #{personalRate}, #{insuranceID})
+    </insert>
+    
+    <delete id="deleteInsuranceDetail" parameterType="int">
+    	Delete from InsuranceDetail where insuranceDetailID=#{insuranceDetailID}
+    </delete>
+    
+    <select id="selectDetailsForInsurance"  parameterType="int" resultType= "InsuranceDetail">  
+        select * from InsuranceDetail where insuranceID=#{insuranceID}
+    </select>
+    
+   
+    
+   
+</mapper>

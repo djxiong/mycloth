@@ -1,0 +1,67 @@
+ 命名规范
+
+ 
+
+表
+
+表名如Order/UserAccout
+
+符合以下规范：
+
+1.     统一采用单数形式，反对Orders
+
+2.     首字母大写，多个单词的话，单词首字母大写，反对order/Useraccout/ORDER
+
+3.     避免中文拼音，反对AgentBaoCi
+
+4.     避免下划线连接，反对User_Accout
+
+5.     避免名称过长，反对WebsiteInfomationModifyRecord
+
+6.     多对多关系表，以Mapping结尾，如UserRoleMapping
+
+7.     避免保留字
+
+ 
+
+字段
+
+字段名如userID/userName/userType
+
+符合以下规范：
+
+1.     首个字母小写，多个单词的话，单词首字母大写，反对UserID/Userid
+
+2.     必须有一主键，主键不直接用ID，而是表名+ID，如userID/orderID
+
+3.     常用的字段name，不直接用name，而是表名+Name，如userName/orderName
+
+4.     常用的字段desc，不直接用desc，而是表名+Desc，如userDesc/orderDesc
+
+5.     大写字母前必须包含至少两个小写的字母，反对uID/oID
+
+6.     避免中文拼音
+
+7.     避免下划线连接
+
+8.     避免名称过长
+
+9.     避免保留字  
+
+ 
+
+对象
+
+1.     存储过程以SP_为前缀
+
+2.     触发器以TR_为前缀
+
+3.     函数以FN_为前缀
+
+4.     主键以PK_为前缀
+
+5.     索引以IX_为前缀
+
+6.     前缀后的首字母大写，多个单词的话，单词首字母大写，如SP_CountFee
+
+7.     所有的关键字的所有字母必须大写，如SELECT userID,username FROM User

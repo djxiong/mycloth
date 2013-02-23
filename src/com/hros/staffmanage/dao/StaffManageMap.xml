@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.staffmanage.dao.StaffManageDao" >
+	<!-- 查询员工所有信息 -->
+    <select id="staffFinfAll" resultType= "StaffManage" >  
+        select * from Staff
+    </select>
+    
+    <!-- 增加员工信息 -->
+    <insert id="addStaff" parameterType="StaffManage" useGeneratedKeys="true" keyColumn="staffID">
+    	insert into staff(staffCode,staffName,staffSex,identityCard,address,phone,homeAddress,homePhone,state,wageNumber,wageBank) 
+    	 values(#{staffCode},#{staffName},#{staffSex},#{identityCard},#{address},#{phone},#{homeAddress},#{homePhone},#{state},#{wageNumber},#{wageBank})
+    </insert>
+    
+    <!-- 更新员工信息 -->
+ 	<update id="updateStaff" parameterType="StaffManage">
+ 		update staff set staffCode=#{staffCode},staffName=#{staffName},staffSex=#{staffSex},
+ 		identityCard=#{identityCard},address=#{address},phone=#{phone},homeAddress=#{homeAddress},
+ 		homePhone=#{homePhone},state=#{state},wageNumber=#{wageNumber},wageBank=#{wageBank}
+ 		where staffID = #{staffID}
+ 	</update>
+ 	
+	<select id="findStafffilter" parameterType="StaffManage"
+		resultType="StaffManage">
+		select * from staff s
+		<where>
+			<if test="staffName!=null and staffName!=''">
+				s.staffName like "%"#{staffName}"%"
+			</if>
+			<if test="staffSex!=null and staffSex!=''"> 
+				and s.staffSex = #{staffSex}
+			</if>
+			<if test="identityCard!=null and identityCard!=''">
+				and s.identityCard = #{identityCard}
+			</if>
+		</where>
+	</select>
+</mapper>

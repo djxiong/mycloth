@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.hros.staffstate.dao.StaffStateDao">
+	<select id="selectStaff" parameterType="Map" resultType="StaffState">
+		select * from staff where staffName like
+		CONCAT('%','${staffName}','%') and identityCard like
+		CONCAT('%','${identityCard}','%') and <![CDATA[state <> '006001']]>
+	</select>
+    <select id="selectStaffState" parameterType="Map" resultType="StaffState">
+		select * from(
+		select ss.staffstateID,
+		ss.staffID,ss.userID,ss.custID,ss.entryDate,ss.entryFileID,ss.agreeSignedDate,ss.agreeExpireDate,
+		ss.agreeRenewDate,ss.toPostDate,ss.livePostDate,ss.quitApplayDate,ss.quitDate,ss.quitFileID,ss.quitUserID,
+		ss.probation,ss.jobCode,ss.post,ss.joinInsuranceDate,ss.disInsuranceDate,ss.insuranceID,ss.insurancelInDate,
+		ss.insurancelOutDate,ss.serviceFeeID,ss.serviceFeeDelay,ss.recUserId,ss.recId,ss.costStartDate,ss.costEndDate,
+		s.state
+		from staffState as ss
+		left join staff as s on ss.staffID=s.staffid
+		left join customer as c on ss.custID=c.custid
+		where s.staffName like CONCAT('%','${staffName}','%') and s.identityCard like CONCAT('%','${identityCard}','%')
+		and c.custName like CONCAT('%','${custName}','%') and s.state=#{state} ORDER BY staffstateID DESC
+		) as staffState GROUP BY staffState.staffID
+	</select>
+	<select id="selectStaffAll" resultType="Staff">
+		select * from staff
+	</select>
+
+	<select id="selectStaffById" parameterType="int" resultType="Staff">
+		select * from staff where staffID =#{staffID}
+	</select>
+
+	<select id="selectCustomer" parameterType="java.util.Map" resultType="Customer">
+		select * from customer where custCity like CONCAT('%','${custCity}','%') and custAttr like CONCAT('%','${custAttr}','%')
+		and custType like CONCAT('%','${custType}','%') and industry like CONCAT('%','${industry}','%') and custName like CONCAT('%','${custName}','%')
+	</select>
+	<select id="selectCustomerById" parameterType="int" resultType="Customer">
+		select * from customer where custID=#{custID}
+	</select>
+	
+	<select id="selectCustomerAll" resultType="Customer">
+		select * from customer
+	</select>
+	<select id="selectFile" parameterType="java.util.Map" resultType="File">
+		select * from file where fileName like CONCAT('%','${fileName}','%') and auditState like CONCAT('%','${auditState}','%')
+		and fileType like  CONCAT('%','${fileType}','%')
+	</select>
+
+	<select id="selectFileById" parameterType="int" resultType="File">
+		select * from file where fileID=#{fileID}
+	</select>
+
+	<select id="selectFileAll" resultType="File">
+	select * from file
+	</select>
+
+	<insert id="addEntry" parameterType="StaffState" useGeneratedKeys="true" keyProperty="staffstateID">
+	insert into
+	staffState
+	(staffID,userID,custID,entryDate,entryFileID,agreeSignedDate,agreeExpireDate,agreeRenewDate,toPostDate,
+	probation,jobCode,post,joinInsuranceDate,insuranceID,insurancelInDate,insurancelOutDate,serviceFeeDelay,
+	recUserId,recId,costStartDate,costEndDate)
+	values
+	(#{staffID},#{userId},#{custID},#{entryDate},#{entryFileID},#{agreeSignedDate},#{agreeExpireDate},
+	#{agreeRenewDate},#{toPostDate},#{probation},#{jobCode},#{post},#{joinInsuranceDate},#{insuranceID},
+	#{insurancelInDate},#{insurancelOutDate},#{serviceFeeDelay},#{recUserId},#{recId},#{costStartDate},#{costEndDate})
+	</insert>
+
+	<update id="updateState" parameterType="Staff">
+	update staff set state=#{state} where staffID=#{staffID}
+	</update>
+	
+	<select id="selectStaffStateById" parameterType="int" resultType="StaffState">
+		select * from (
+		select * from staffState where staffID=#{staff.staffID} ORDER BY entryDate DESC
+		)as staffState GROUP BY staffID
+	</select>
+	<update id="updateStaffState" parameterType="StaffState">
+		update staffState set custID=#{custID},entryDate=#{entryDate},entryFileID=#{entryFileID},agreeSignedDate=#{agreeSignedDate},
+		agreeExpireDate=#{agreeExpireDate},agreeRenewDate=#{agreeRenewDate},toPostDate=#{toPostDate},probation=#{probation},
+		jobCode=#{jobCode},post=#{post},joinInsuranceDate=#{joinInsuranceDate},insuranceID=#{insuranceID},insurancelInDate=#{insurancelInDate},
+		insurancelOutDate=#{insurancelOutDate},serviceFeeDelay=#{serviceFeeDelay},serviceFeeID=#{serviceFeeID},recUserId=#{recUserId},recId=#{recId},
+		costStartDate=#{costStartDate},costEndDate=#{costEndDate}
+		where staffstateID=#{staffstateID}
+	</update>
+	<update id="updateStaffQuit" parameterType="StaffState">
+	update staffState set custID=#{custID},entryDate=#{entryDate},entryFileID=#{entryFileID},agreeSignedDate=#{agreeSignedDate},
+		agreeExpireDate=#{agreeExpireDate},agreeRenewDate=#{agreeRenewDate},toPostDate=#{toPostDate},probation=#{probation},
+		jobCode=#{jobCode},post=#{post},joinInsuranceDate=#{joinInsuranceDate},insuranceID=#{insuranceID},insurancelInDate=#{insurancelInDate},
+		insurancelOutDate=#{insurancelOutDate},serviceFeeDelay=#{serviceFeeDelay},quitFileID=#{quitFileID},quitDate=#{quitDate},
+		quitApplayDate=#{quitApplayDate},livePostDate=#{livePostDate},disInsuranceDate=#{disInsuranceDate},quitUserID=#{quitUserID} 
+		where staffstateID=#{staffstateID}
+	</update>
+
+	<select id="selectInsurance" resultType="Insurance">
+		select * from insurance
+	</select>
+	
+	<select id="selectServiceFee" resultType="ServiceFee">
+		select * from serviceFee
+	</select>
+	
+	<select id="selectUser" resultType="User">
+		select * from userInfo
+	</select>
+	
+	<select id="selectRecCost" resultType="RecCost">
+		select * from recCost
+	</select>
+</mapper>

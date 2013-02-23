@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.cloth.dao.ReturnRecordDao" >  
+    <resultMap id="returnRecordResult" type="ReturnRecord">
+		<id property="returnRecordID" column="returnRecordID"></id>
+		<result property="clothID" column="clothID"></result>
+		<result property="returnDate" column="returnDate"></result>
+		<result property="reason" column="reason"></result>
+		<result property="count" column="count"></result>
+
+	</resultMap>
+	
+    <select id="getReturnRecordByID"  parameterType="int" resultType= "ReturnRecord">  
+        select * from ReturnRecord where returnRecordID=#{returnRecordID}
+    </select>
+    
+    <select id="findReturnRecordBetweenDate"  parameterType="java.util.Map" resultType= "ReturnRecord">  
+        select * from returnRecord where returnDate between #{startDate} and #{endDate}
+    </select>
+    
+    <update id="updateReturnRecord" parameterType="ReturnRecord">
+    	Update returnRecord set 
+    	clothID=#{clothID},
+    	returnDate=#{returnDate},
+    	orderNumber=#{orderNumber},
+    	reason=#{reason},
+    	count=#{count}
+    	where returnRecordID=#{returnRecordID}
+    </update>
+    
+    <insert id="insertReturnRecord" parameterType="ReturnRecord" useGeneratedKeys="true" keyProperty="returnRecordID">
+    	Insert into returnRecord (returnRecordID,clothID,returnDate,reason,count) values 
+    	(#{returnRecordID},#{clothID},#{returnDate},#{reason},#{count})
+    </insert>
+    
+    <delete id="deleteReturnRecord" parameterType="int">
+    	Delete from returnRecord where returnRecordID=#{returnRecordID}
+    </delete>
+   
+</mapper>

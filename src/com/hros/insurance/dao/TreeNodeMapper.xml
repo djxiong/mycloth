@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.insurance.dao.TreeNodeDao" >  
+    <resultMap id="treeNodeResult" type="TreeNode">
+		<id property="treeNodeID" column="treeNodeID"></id>
+		<result property="treeNodeName" column="treeNodeName"></result>
+		<result property="itemTableName" column="itemTableName"></result>
+		<result property="parentID" column="parentID"></result>
+		
+	</resultMap>
+	
+	<select id="selectTreeNodeList" parameterType= "string" resultType="TreeNode">
+    	select * from TreeNode where itemTableName=#{itemTableName} order by treeNodeID
+    </select>
+	
+    <select id="getTreeNodeByID"  parameterType="int" resultType= "TreeNode">  
+        select * from TreeNode where treeNodeID=#{treeNodeID}
+    </select>
+    
+    <update id="updateTreeNode" parameterType="TreeNode">
+    	Update treeNode set treeNodeName=#{treeNodeName} where treeNodeID=#{treeNodeID}
+    </update>
+    
+    <insert id="insertTreeNode" parameterType="TreeNode" useGeneratedKeys="true" keyProperty="treeNodeID">
+    	Insert into treeNode (treeNodeName,itemTableName,parentID) values (#{treeNodeName},#{itemTableName},#{parentID})
+    </insert>
+    
+    <select id="selectChildrenForTreeNode"  parameterType="int" resultType= "java.util.List">  
+        select * from treeNode where parentID=#{parentID}
+    </select>
+    
+    
+    <delete id="deleteTreeNode" parameterType="int">
+    	Delete from treeNode where treeNodeID=#{treeNodeID}
+    </delete>
+   
+</mapper>

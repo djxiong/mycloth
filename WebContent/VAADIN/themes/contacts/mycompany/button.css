@@ -1,0 +1,71 @@
+.v-button {
+      display: block;
+      height: 55px;
+      background: transparent;
+      border: none;
+      text-align: center;
+}
+
+.v-button span {
+      font-size: 12px;
+      font-family: ËÎÌו,verdana,Arial, Helvetica;
+      font-weight: normal;
+}
+
+.v-button:focus {
+	background-image: url(../../reindeer/button/img/left-focus.png); /** sprite-ref: buttons */
+	outline: none;
+	}
+
+.v-button:focus .v-button-wrap {
+	background-image: url(../../reindeer/button/img/right-focus.png); /** sprite-ref: buttons; sprite-alignment: right */
+	outline: none;
+	}
+
+.v-button:active,
+.v-button.v-pressed {
+	background-image: url(../../reindeer/button/img/left-pressed.png); /** sprite-ref: buttons */
+	outline: none;
+	}
+
+.v-button:active .v-button-wrap,
+.v-button.v-pressed .v-button-wrap {
+	background-image: url(../../reindeer/button/img/right-pressed.png); /** sprite-ref: buttons; sprite-alignment: right */
+	outline: none;
+	}
+
+.v-button,
+.v-disabled.v-button {
+	height: 26px;
+	padding: 0 0 0 6px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-image: url(../../reindeer/button/img/left.png); /** sprite-ref: buttons */
+	border: none;
+	cursor: default;
+	}
+
+.v-button .v-button-wrap,
+.v-disabled .v-button .v-button-wrap {
+	display: block;
+	height: 22px;
+	padding: 4px 15px 0 9px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: right top;
+	background-image: url(../../reindeer/button/img/right.png);  /** sprite-ref: buttons; sprite-alignment: right */
+	
+	border: none;
+    box-shadow: none;
+	border-radius: 0;
+	}
+
+.v-button-caption {
+	color: #222;
+	text-shadow: #fff 0 1px 0;
+	font-weight: bold;
+	font-size: 11px;
+	line-height: 16px;
+	}
+
+

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+<mapper namespace="com.hros.customer.dao.CustomerContactPersonDao" >
+	<select id="selectAllCustomerContactPerson" resultType="CustomerContactPerson">
+		select * from CustomerContactPerson
+	</select>
+	<select id="selectCustomerContactPerson" parameterType="int" resultType="CustomerContactPerson">
+		select * from CustomerContactPerson where custID = #{custID}
+	</select>
+	<insert id="insertCustomerContactPerson" parameterType="CustomerContactPerson" useGeneratedKeys="true" keyProperty="contactID">
+		insert into 
+			CustomerContactPerson (custID,
+								   contactCode, 
+								   contactName, 
+								   contactSex, 
+								   phone, 
+								   email, 
+								   address, 
+								   dept, 
+								   pos, 
+								   mobilePhone) 
+			values (#{custID},
+					#{contactCode}, 
+					#{contactName}, 
+					#{contactSex}, 
+					#{phone}, 
+					#{email}, 
+					#{address}, 
+					#{dept}, 
+					#{pos}, 
+					#{mobilePhone})
+	</insert>
+	<update id="updateCustomerContactPerson" parameterType="CustomerContactPerson">
+		update CustomerContactPerson 
+			set custID=#{custID},
+				contactCode=#{contactCode}, 
+				contactName=#{contactName}, 
+				contactSex=#{contactSex}, 
+				phone=#{phone}, 
+				email=#{email}, 
+				address=#{address}, 
+				dept=#{dept}, 
+				pos=#{pos}, 
+				mobilePhone=#{mobilePhone}
+		where contactID = #{contactID}
+	</update>
+	<delete id="deleteCustomerContactPerson" parameterType="int">
+		delete from CustomerContactPerson where contactID = #{contactID}
+	</delete>
+</mapper>

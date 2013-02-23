@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.company.dao.CompanyDao" >
+	<select id="selectAllComp" resultType="Comp">
+		select * from company order by fcompID, seq
+	</select>
+	<select id="selectCompById" parameterType="int" resultType="Comp">
+		select * from company where compID = #{compID}
+	</select>
+	<insert id="insertComp" parameterType="Comp" useGeneratedKeys="true" keyProperty="compID">
+		insert into company (fcompID,compCode,compName,compLegalPerson,seq) 
+			values (#{fcompID},#{compCode},#{compName},#{compLegalPerson},#{seq})
+	</insert>
+	<update id="updateComp" parameterType="Comp">
+		update company set fcompID=#{fcompID}, compCode=#{compCode}, 
+			compName=#{compName}, compLegalPerson=#{compLegalPerson}, 
+			seq=#{seq}
+		where compID = #{compID}
+	</update>
+	<delete id="deleteCompById" parameterType="int">
+		delete from company where compID = #{compID}
+	</delete>
+</mapper>

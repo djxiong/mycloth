@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.cloth.dao.ClothDao" >  
+    <resultMap id="clothResult" type="Cloth">
+		<id property="clothID" column="clothID"></id>
+		<result property="name" column="name"></result>
+		<result property="size" column="size"></result>
+		<result property="color" column="color"></result>
+		<result property="barCode" column="barCode"></result>
+		<result property="count" column="count"></result>
+		<result property="salesOffType" column="salesOffType"></result>
+		<result property="salesOff" column="salesOff"></result>
+		<result property="originalPrice" column="originalPrice"></result>
+		<result property="price" column="price"></result>
+		<result property="stockDate" column="stockDate"></result>
+	</resultMap>
+	
+    <select id="getClothByID"  parameterType="int" resultType= "Cloth">  
+        select * from Cloth where clothID=#{clothID}
+    </select>
+    
+    <select id="getClothByBarCode"  parameterType="int" resultType= "Cloth">  
+        select * from Cloth where barCode=#{barCode}
+    </select>
+    
+    <select id="findClothsByBarCode"  parameterType="string" resultType= "Cloth">  
+        select * from Cloth where barCode like "%"#{barCode}"%"
+    </select>
+    
+    <select id="findClothsByName"  parameterType="string" resultType= "Cloth">  
+        select * from Cloth where name like "%"#{name}"%"
+    </select>
+    
+    <select id="getAllClothes"  parameterType="int" resultType= "Cloth">  
+        select * from Cloth 
+    </select>
+    
+    <select id="getRemainCloths"  parameterType="int" resultType= "Cloth">  
+        select * from Cloth where count > 0 order by count
+    </select>
+    
+    <insert id="insertCloth" parameterType="Cloth" useGeneratedKeys="true" keyProperty="clothID">
+    	Insert into cloth (clothID,name,size,color,barCode,count,salesOffType,salesOff,originalPrice,price,stockDate) 
+    	values (#{clothID},#{name},#{size},#{color},#{barCode},#{count},#{salesOffType},#{salesOff},#{originalPrice},#{price},#{stockDate})
+    </insert>
+    
+    <update id="updateCloth" parameterType="Cloth">
+    	Update cloth set 
+    	name=#{name},
+    	size=#{size},
+    	color=#{color},
+    	barCode=#{barCode},
+    	count=#{count},
+    	salesOffType=#{salesOffType},
+    	salesOff=#{salesOff},
+    	originalPrice=#{originalPrice},
+    	price=#{price},
+    	stockDate=#{stockDate}
+    	where clothID=#{clothID}
+    </update>
+    
+    <delete id="deleteCloth" parameterType="int">
+    	Delete from cloth where clothID=#{clothID}
+    </delete>
+   
+</mapper>

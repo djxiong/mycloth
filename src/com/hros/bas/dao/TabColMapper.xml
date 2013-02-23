@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.bas.dao.TabColumnDao" >
+	<select id="selectTabColByUser" parameterType="TabCol" resultType="TabCol">
+		select * from TableColumns 
+			where tabClass = #{tabClass}
+			  and tabName = #{tabName} 
+			  and userId = #{userId}
+		order by colSeq
+	</select>
+	
+	<select id="selectTabCol" parameterType="TabCol" resultType="TabCol">
+		select * from TableColumns 
+			where colName = #{colName}
+			  and tabClass = #{tabClass}
+			  and tabName = #{tabName} 
+			  and userId = #{userId}
+	</select>
+	
+	<insert id="insertTabCol" parameterType="TabCol" useGeneratedKeys="true" keyProperty="colId">
+		insert into TableColumns 
+			values(colName,
+				   colCName,
+				   colWidth,
+				   colIsVisible,
+				   tabClass,
+				   tabName,
+				   userId)
+	</insert>
+	
+	<update id="updateTabCol" parameterType="TabCol">
+		update TableColumns 
+			set colName = #{colName},
+				colCName = #{colCName},
+				colWidth = #{colWidth},
+				colIsVisible = #{colIsVisible},
+				tabClass = #{tabClass},
+				tabName = #{tabName},
+				userId = #{userId}
+		where colId = #{colId}
+	</update>
+</mapper>

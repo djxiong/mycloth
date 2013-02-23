@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.insurance.dao.InsuranceDao" >  
+    <resultMap id="insuranceResult" type="Insurance">
+		<id property="insuranceID" column="insuranceID"></id>
+		<result property="insuranceName" column="insuranceName"></result>
+		<collection property="detailInsurances" javaType="ArrayList" column="insuranceID" ofType="InsuranceDetail" select="selectDetailsForInsurance"/>
+		
+	</resultMap>
+	
+	<select id="findInsuranceByTreeNodeID" parameterType= "int" resultType="Insurance">
+    	select * from Insurance where treeNodeID=#{treeNodeID} order by insuranceID
+    </select>
+	
+    <select id="getInsuranceByID"  parameterType="int" resultType= "Insurance">  
+        select * from Insurance where insuranceID=#{insuranceID}
+    </select>
+    
+    <update id="updateInsurance" parameterType="Insurance">
+    	Update insurance set insuranceName=#{insuranceName} where insuranceID=#{insuranceID}
+    </update>
+    
+    <insert id="insertInsurance" parameterType="Insurance" useGeneratedKeys="true" keyProperty="insuranceID">
+    	Insert into insurance (insuranceName,treeNodeID) values (#{insuranceName},#{treeNodeID})
+    </insert>
+    
+    <delete id="deleteInsurance" parameterType="int">
+    	Delete from insurance where insuranceID=#{insuranceID}
+    </delete>
+   
+</mapper>

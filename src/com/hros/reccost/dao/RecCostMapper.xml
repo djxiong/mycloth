@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.reccost.dao.RecCostDao" >
+	<select id="selectAllRecCost" resultType="RecCost">
+		select * from reccost
+	</select>
+	
+	<insert id="insertRecCost" parameterType="RecCost" useGeneratedKeys="true" keyProperty="recId">
+		insert into 
+			reccost (recFid, 
+					 recName, 
+					 staffStateId, 
+					 recUserId, 
+					 isDisposable, 
+					 costAccount)
+			values (#{recFid}, 
+					#{recName}, 
+					#{staffStateId}, 
+					#{recUserId}, 
+					#{isDisposable}, 
+					#{costAccount})
+	</insert>
+	
+	<update id="updateRecCost" parameterType="RecCost">
+		update reccost 
+			set recFid = #{recFid},
+				recName = #{recName},
+				staffStateId = #{staffStateId},
+				recUserId = #{recUserId},
+				isDisposable = #{isDisposable},
+				costAccount = #{costAccount}
+		where recId = #{recId}
+	</update>
+	
+	<delete id="deleteRecCost" parameterType="int">
+		delete from reccost where recId = #{recId}
+	</delete>
+</mapper>

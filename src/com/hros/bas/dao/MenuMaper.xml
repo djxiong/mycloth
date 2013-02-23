@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.bas.dao.MenuDao" >
+    <select id="selectMenu"  parameterType= "int"  resultType= "Menu" >  
+        select * from menu where menuID=#{menuID}
+    </select>
+    
+    <select id="selectMenuList" parameterType= "string" resultType="Menu">
+    	select * from menu order by fMenuID, seq
+    </select>
+    
+    <select id="selectMenuChild" resultType="Menu">
+    	SELECT * FROM menu a
+			where not exists (select 1 from menu b where a.menuid = b.fmenuid)
+    </select>
+    
+    <insert id="addMenu" parameterType="Menu" useGeneratedKeys="true" keyProperty="menuID">
+    	insert into menu (fMenuID, menuName, isShow, seq)
+    		values (#{fMenuID}, #{menuName}, #{isShow}, #{seq})
+    </insert>
+    
+    <update id="updateMenu" parameterType="Menu">
+    	update menu set menuName=#{menuName}, isShow=#{isShow}, seq=#{seq}
+    		where menuID=#{menuID}
+    </update>
+    
+    <delete id="deleteMenu" parameterType="int">
+    	delete from menu where menuID=#{menuID}
+    </delete>
+    
+    <select id="selectAllMenuList"    resultType= "Menu" >  
+        select * from menu 
+    </select>
+</mapper>

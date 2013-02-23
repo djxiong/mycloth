@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE configuration PUBLIC   
+    "-//mybatis.org//DTD Config 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-config.dtd" >  
+  
+<configuration>  
+
+<!--mybatis连接数据库
+    <properties resource="jdbc.properties" />
+    
+    <environments default = "development" >  
+        <environment id="development" >  
+            <transactionManager type="JDBC"  />  
+            <dataSource type="POOLED" >  
+              <property name="driver"  value= "${driver}"  />  
+              <property name="url"  value= "${url}"  />  
+              <property name="username"  value= "${username}"/>  
+              <property name="password"  value= "${password}"/>
+            </dataSource>  
+        </environment>  
+    </environments>
+ -->
+ 	<typeAliases>
+ 		<typeAlias type="com.hros.user.domain.UserInfo" alias="User"/>
+ 		<!-- added by xiongdaijun -->
+ 		<typeAlias type="com.hros.user.domain.RoleInfo" alias="Role"/>
+ 		<typeAlias type="com.hros.user.domain.RoleUserMap" alias="RoleUser"/>
+ 		<typeAlias type="com.hros.user.domain.RoleMenuMap" alias="RoleMenu"/>
+ 		
+ 		<!-- 社保模块，added by xiongdaijun --> 
+ 		<typeAlias type="com.hros.insurance.domain.InsuranceInfo" alias="Insurance"/>
+ 		<typeAlias type="com.hros.insurance.domain.InsuranceDetailInfo" alias="InsuranceDetail"/>
+ 		<typeAlias type="com.hros.insurance.domain.TreeNodeInfo" alias="TreeNode"/>
+ 		<typeAlias type="com.hros.insurance.domain.InsuranceHistoryInfo" alias="InsuranceHistory"/>
+ 		
+ 		<!-- 基本信息 -->
+ 		<typeAlias type="com.hros.bas.domain.DictInfo" alias="Dict"/>
+ 		<typeAlias type="com.hros.bas.domain.MenuInfo" alias="Menu"/>
+ 		<typeAlias type="com.hros.company.domain.Company" alias="Comp"/>
+ 		<!-- 入离职信息 -->
+ 		<typeAlias type="com.hros.staffstate.domain.Staff" alias="Staff"/>
+ 		<typeAlias type="com.hros.staffstate.domain.StaffState" alias="StaffState"/>
+ 		<!-- 档案管理 -->
+ 		<typeAlias type="com.hros.file.domain.File" alias="File"/>
+ 		
+ 		<!-- 客户管理 -->
+ 		<typeAlias type="com.hros.customer.domain.Customer" alias="Customer"/>
+ 		<typeAlias type="com.hros.customer.domain.CustomerContactPerson" alias="CustomerContactPerson"/>
+ 		<!-- 员工管理 -->
+ 		<typeAlias type="com.hros.staffmanage.domain.StaffManage" alias="StaffManage"/>
+ 		<!-- 服务费管理 -->
+ 		<typeAlias type="com.hros.servicefee.domain.ServiceFee" alias="ServiceFee"/>
+ 		<!-- 招聘费用管理 -->
+ 		<typeAlias type="com.hros.reccost.domain.RecCost" alias="RecCost"/>
+ 		<!-- 表单列管理 -->
+ 		<typeAlias type="com.hros.bas.domain.TabColumn" alias="TabCol"/>
+ 		
+ 		 <typeAlias type="com.hros.cloth.domain.Cloth" alias="Cloth"/>
+ 		<typeAlias type="com.hros.cloth.domain.Customer2" alias="Customer2"/>
+ 		<typeAlias type="com.hros.cloth.domain.OrderHistory" alias="OrderHistory"/>
+ 		<typeAlias type="com.hros.cloth.domain.ReturnRecord" alias="ReturnRecord"/>
+ 	</typeAliases>
+ 
+    <mappers>  
+        <mapper resource="com/hros/user/dao/UserMaper.xml" />  
+        <!-- added by xiongdaijun  -->
+        <mapper resource="com/hros/user/dao/RoleMapper.xml" />  
+        <mapper resource="com/hros/user/dao/RoleUserMap.xml" />  
+        <mapper resource="com/hros/user/dao/RoleMenuMap.xml" />  
+        
+        <!-- 社保模块，added by xiongdaijun --> 
+    	<mapper resource="com/hros/insurance/dao/InsuranceMapper.xml" /> 
+        <mapper resource="com/hros/insurance/dao/InsuranceDetailMapper.xml" />
+        <mapper resource="com/hros/insurance/dao/TreeNodeMapper.xml" />
+        <mapper resource="com/hros/insurance/dao/InsuranceHistoryMapper.xml" />
+        
+        <!-- 基本信息 -->
+        <mapper resource="com/hros/bas/dao/DictMap.xml"/>
+        <mapper resource="com/hros/bas/dao/MenuMaper.xml"/>
+        <mapper resource="com/hros/company/dao/CompanyMaper.xml"/>
+
+        <!-- 客户管理 -->
+        <mapper resource="com/hros/customer/dao/CustomerMaper.xml"/>
+        <mapper resource="com/hros/customer/dao/CustomerContactPersonMaper.xml"/>
+        
+        <!-- 入离职信息 -->
+        <mapper resource="com/hros/staffstate/dao/StaffStateMap.xml"/>
+        <!-- 员工管理 -->
+        <mapper resource="com/hros/staffmanage/dao/StaffManageMap.xml"/>
+        <!-- 服务费管理 -->
+        <mapper resource="com/hros/servicefee/dao/ServiceFeeMaper.xml"/>
+        <!-- 招聘费用管理 -->
+        <mapper resource="com/hros/reccost/dao/RecCostMapper.xml"/>
+        <!-- 表单列管理 -->
+        <mapper resource="com/hros/bas/dao/TabColMapper.xml"/>
+        <!-- 档案管理 -->
+        <mapper resource="com/hros/file/dao/FileMap.xml"/>
+        
+        <mapper resource="com/hros/cloth/dao/ClothMapper.xml" />
+        <mapper resource="com/hros/cloth/dao/Customer2Mapper.xml" />
+        <mapper resource="com/hros/cloth/dao/OrderHistoryMapper.xml" />
+        <mapper resource="com/hros/cloth/dao/ReturnRecordMapper.xml" />
+    </mappers> 
+    
+   
+    
+ 
+</configuration>

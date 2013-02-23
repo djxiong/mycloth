@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.user.dao.UserDao" >  
+    	<resultMap id="userResult" type="User">
+		<id property="userID" column="userID"></id>
+		<result property="userCode" column="userCode"></result>
+		<result property="userName" column="userName"></result>
+		<result property="loginName" column="loginName"></result>
+		<result property="password" column="password"></result>
+		<result property="identityCard" column="identityCard"></result>
+		<result property="address" column="address"></result>
+		<result property="phone" column="phone"></result>
+		<result property="shortPhone" column="shortPhone"></result>
+		<result property="compID" column="compID"></result>
+		<result property="posID" column="posID"></result>
+		<result property="customersID" column="customersID"></result>
+		<result property="compsID" column="compsID"></result>
+	</resultMap>
+	
+    <select id="selectUser"  parameterType= "java.util.Map"  resultType= "User" >  
+        select * from userinfo where id=#{id} and userName=#{user}
+    </select>
+    <select id="selectUserBatch" resultType="User">
+    	select * from userinfo where userID in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    
+    <select id="searchUserByLoginName"  parameterType="string" resultType= "User">  
+        select * from userinfo where loginName=#{loginName}
+    </select>
+    
+    <select id="searchUserByName"  parameterType="string" resultType= "User">  
+        select * from userinfo where userName=#{userName}
+    </select>
+    
+    <select id="selectAllUsers"   resultType= "User" >  
+        select * from userinfo
+    </select>
+    <update id="updateUser" parameterType="User">
+    	Update userinfo set 
+    	userCode=#{userCode},
+    	userName=#{userName},
+    	loginName=#{loginName},
+    	password=#{password},
+    	identityCard=#{identityCard},
+    	address=#{address},
+    	phone=#{phone},
+    	shortPhone=#{shortPhone},
+    	compID=#{compID},
+    	posID=#{posID},
+    	customersID=#{customersID},
+    	compsID=#{compsID}
+    	where userID=#{userID}
+    </update>
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="userID">
+    	Insert into userinfo (userCode,userName,loginName,password,identityCard,address,phone,shortPhone,compID,posID,customersID,userID) 
+    	values (#{userCode},#{userName},#{loginName},#{password},#{identityCard},#{address},#{phone},#{shortPhone},#{compID},#{posID},#{customersID},#{userID})
+    </insert>
+    <delete id="deleteUser" parameterType="int">
+    	Delete from userinfo where userID=#{userID}
+    </delete>
+    <insert id="insertUserBatch" parameterType="java.util.List">
+    	Insert into userinfo (userName,password) values 
+    	<foreach collection="list" item="obj" index="index" separator="," >
+    		(#{obj.userName}, #{obj.password})
+    	</foreach>
+    </insert>
+</mapper>

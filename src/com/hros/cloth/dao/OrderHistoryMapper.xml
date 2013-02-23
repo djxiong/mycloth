@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.cloth.dao.OrderHistoryDao" >  
+    <resultMap id="orderHistoryResult" type="OrderHistory">
+		<id property="orderHistoryID" column="orderHistoryID"></id>
+		<result property="customerID" column="customerID"></result>
+		<result property="clothID" column="clothID"></result>
+		<result property="consumption" column="consumption"></result>
+		<result property="consumeDate" column="consumeDate"></result>
+		<result property="state" column="state"></result>
+		<result property="profit" column="profit"></result>
+		<result property="orderNumber" column="orderNumber"></result>
+	</resultMap>
+	
+    <select id="getOrderHistoryByID"  parameterType="int" resultType= "OrderHistory">  
+        select * from OrderHistory where orderHistoryID=#{orderHistoryID}
+    </select>
+    
+    <select id="findOrderHistoryByClothID"  parameterType="int" resultType= "OrderHistory">  
+        select * from OrderHistory where clothID=#{clothID} and state<![CDATA[ <> ]]>'INVALID'
+    </select>
+    
+    <select id="findOrderHistoryByCustomerID"  parameterType="int" resultType= "OrderHistory">  
+        select * from OrderHistory where customerID=#{customerID} and state<![CDATA[ <> ]]>'INVALID'
+    </select>
+    
+    <select id="findOrderHistoryBetweenDate"  parameterType="java.util.Map" resultType= "OrderHistory">  
+        select * from OrderHistory where consumeDate between #{startDate} and #{endDate} and state<![CDATA[ <> ]]>'INVALID' order by consumeDate
+    </select>
+    
+    
+    <update id="updateOrderHistory" parameterType="OrderHistory">
+    	Update orderHistory set 
+    	customerID=#{customerID},
+    	clothID=#{clothID},
+    	consumption=#{consumption},
+    	consumeDate=#{consumeDate},
+    	orderNumber=#{orderNumber},
+    	state=#{state},
+    	profit=#{profit},
+    	exchangedOrderID=#{exchangedOrderID}
+    	where orderHistoryID=#{orderHistoryID}
+    </update>
+    
+    <insert id="insertOrderHistory" parameterType="OrderHistory" useGeneratedKeys="true" keyProperty="orderHistoryID">
+    	Insert into orderHistory (orderHistoryID,customerID,clothID,consumption,consumeDate,orderNumber,state,profit,exchangedOrderID) values 
+    	(#{orderHistoryID},#{customerID},#{clothID},#{consumption},#{consumeDate},#{orderNumber},#{state},#{profit},#{exchangedOrderID})
+    </insert>
+    
+    <delete id="deleteOrderHistory" parameterType="int">
+    	Delete from orderHistory where orderHistoryID=#{orderHistoryID}
+    </delete>
+   
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.bas.dao.DictDao" >
+    <select id="selectDict"  parameterType= "int"  resultType= "Dict" >  
+        select * from dict where id=#{id}
+    </select>
+    
+    <select id="selectAllDictList" resultType="Dict">
+    	select * from dict
+    </select>
+
+    <select id="selectDictByCode"  parameterType= "String"  resultType= "Dict" >  
+        select * from dict where dictCode like #{code}"%"
+    </select>
+
+    <insert id="addDict" parameterType="Dict" useGeneratedKeys="true" keyProperty="dictID">
+    	insert into dict (fDictID, dictCode, dictName, seq)
+    		values (#{fDictID}, #{dictCode}, #{dictName}, #{seq})
+    </insert>
+    
+    <update id="updateDict" parameterType="Dict">
+    	update dict set dictCode=#{dictCode}, dictName=#{dictName}, seq=#{seq}
+    		where dictID=#{dictID}
+    </update>
+    
+    <delete id="deleteDict" parameterType="int">
+    	delete from dict where dictID=#{id}
+    </delete>
+</mapper>

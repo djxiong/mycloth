@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.user.dao.RoleUserDao" >  
+    	<resultMap id="userResult" type="RoleUser">
+		<id property="roleUserID" column="roleUserID"></id>
+		<result property="roleID" column="roleID"></result>
+		<result property="userID" column="userID"></result>
+	</resultMap>
+	
+     
+    <!-- 查询该用户所有的角色 -->
+    <select id="selectRolesForUser" parameterType="int" resultType="RoleUser">
+    	select * from roleUserMap where userID=#{userID}
+    </select>
+    
+    <!-- 查询属于本角色(roleID)的所有用户 -->
+    <select id="selectUsersForRole" parameterType="int" resultType="RoleUser">
+    	select * from roleUserMap where roleID=#{roleID}
+    </select>
+    <update id="updateRoleUser" parameterType="RoleUser">
+    	Update roleUserMap set roleID=#{roleID} where roleUserID=#{roleUserID}
+    </update>
+    <insert id="insertRoleUser" parameterType="RoleUser" useGeneratedKeys="true" keyProperty="roleUserID">
+    	Insert into roleUserMap (roleID,userID) values (#{roleID}, #{userID})
+    </insert>
+
+    <delete id="deleteRoleUser" parameterType="int">
+    	Delete from roleUserMap where roleUserID=#{roleUserID}
+    </delete>
+    
+    <delete id="deleteRoleAndUser" parameterType="java.util.Map">
+    	Delete from roleUserMap where roleID=#{roleID} and userID=#{userID}
+    </delete>
+    
+    <delete id="deleteRolesForUser" parameterType="java.util.Map">
+    	Delete from roleUserMap where userID=#{userID} and roleID in 
+    	<foreach collection="roleIDs" index="index" item="item" open="(" separator="," close=")">
+            #{item.roleID}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteUsersForRole" parameterType="java.util.Map">
+    	Delete from roleUserMap where roleID=#{roleID} and userID in 
+    	<foreach collection="userIDs" index="index" item="item" open="(" separator="," close=")">
+            #{item.userID}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteRoleUserByRoleID" parameterType="int">
+    	Delete from roleUserMap where roleID=#{roleID}
+    </delete>
+    
+    <delete id="deleteRoleUserByUserID" parameterType="int">
+    	Delete from roleUserMap where userID=#{userID}
+    </delete>
+    
+    <insert id="insertRoleUserBatch" parameterType="java.util.List">
+    	Insert into roleUserMap (roleID,userID) values 
+    	<foreach collection="list" item="obj" index="index" separator="," >
+    		(#{obj.roleID}, #{obj.userID})
+    	</foreach>
+    </insert>
+</mapper>

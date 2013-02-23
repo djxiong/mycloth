@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+
+<mapper namespace="com.hros.cloth.dao.Customer2Dao" >  
+    <resultMap id="customerResult" type="Customer2">
+		<id property="customer2ID" column="customer2ID"></id>
+		<result property="name" column="name"></result>
+		<result property="phone" column="phone"></result>
+		<!-- ALTER TABLE customer2 DROP number -->
+		
+		<!-- ALTER TABLE customer2 ADD customerNumber VARCHAR(50) COMMENT '客户编号'; -->
+		<result property="customerNumber" column="customerNumber"></result>
+	</resultMap>
+	
+	
+    <select id="getCustomerByID"  parameterType="int" resultType= "Customer2">  
+        select * from Customer2 where customer2ID=#{customer2ID}
+    </select>
+    
+    
+    <select id="getCustomerByNumber"  parameterType="int" resultType= "Customer2">  
+        select * from Customer2 where customerNumber=#{customerNumber}
+    </select>
+    
+    <select id="findCustomersByNumber"  parameterType="string" resultType= "Customer2">  
+        select * from Customer2 where customerNumber like "%"#{customerNumber}"%"
+    </select>
+    
+    <select id="findCustomersByName"  parameterType="string" resultType= "Customer2">  
+        select * from Customer2 where name like "%"#{name}"%"
+    </select>
+    
+    <select id="getAllCustomers"  parameterType="int" resultType= "Customer2">  
+        select * from customer2 
+    </select>
+    
+    <update id="updateCustomer" parameterType="Customer2">
+    	Update customer2 set 
+    	name=#{name},
+    	phone=#{phone}, 
+    	customerNumber=#{customerNumber}
+    	where customer2ID=#{customer2ID}
+    </update>
+    
+    <insert id="insertCustomer" parameterType="Customer2" useGeneratedKeys="true" keyProperty="customer2ID">
+    	Insert into customer2 (customer2ID,name,phone,customerNumber) values 
+    	(#{customer2ID},#{name},#{phone},#{customerNumber})
+    </insert>
+    
+    <delete id="deleteCustomer" parameterType="int">
+    	Delete from customer2 where customer2ID=#{customer2ID}
+    </delete>
+   
+</mapper>

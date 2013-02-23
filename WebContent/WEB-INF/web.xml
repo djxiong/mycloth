@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>hros</display-name>
+
+	<!-- vaadin配置 -->
+	<context-param>
+		<description>
+		Vaadin production mode</description>
+		<param-name>productionMode</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>Hros Application</servlet-name>
+		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin application class to start</description>
+			<param-name>application</param-name>
+			<param-value>com.hros.vaadin.HrosApplication</param-value>
+		</init-param>
+		<init-param>
+			<description>
+			Application widgetset</description>
+			<param-name>widgetset</param-name>
+			<param-value>com.hros.vaadin.widgetset.MyclothWidgetset</param-value>
+		</init-param>
+	</servlet> 
+	<!-- 	<servlet>
+		<servlet-name>Test Application</servlet-name>
+		<servlet-class>com.vaadin.incubator.spring.servlet.SpringApplicationServlet</servlet-class>
+		<init-param>
+			<description>Vaadin application bean to start</description>
+			<param-name>applicationBean</param-name>
+			<param-value>fooApplication</param-value>
+		</init-param>		
+	</servlet>-->
+	<servlet-mapping>
+		<servlet-name>Hros Application</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	
+	<!-- Spring配置 -->
+	<context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:applicationContext.xml</param-value>
+  	</context-param>
+	<listener>
+ 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+	    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	
+	<session-config>
+		<session-timeout>300</session-timeout>
+	</session-config>
+
+</web-app>

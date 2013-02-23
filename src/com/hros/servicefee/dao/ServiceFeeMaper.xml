@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+<mapper namespace="com.hros.servicefee.dao.ServiceFeeDao" >
+	<select id="selectAllServiceFee" resultType="ServiceFee">
+		select * from servicefee
+	</select>
+	
+	<insert id="insertServiceFee" parameterType="ServiceFee" useGeneratedKeys="true" keyProperty="serviceFeeID">
+		insert into 
+			servicefee (serviceFeeFid,
+						serviceFeeCode, 
+						serviceFeeName, 
+						serviceFeeMethod, 
+						dayFeeType, 
+						dayFee, 
+						monthFeeType, 
+						monthFee, 
+						delayDay,
+						isCalAttenDay) 
+			values (#{serviceFeeFid},
+					#{serviceFeeCode}, 
+					#{serviceFeeName}, 
+					#{serviceFeeMethod}, 
+					#{dayFeeType}, 
+					#{dayFee}, 
+					#{monthFeeType}, 
+					#{monthFee}, 
+					#{delayDay},
+					#{isCalAttenDay})
+	</insert>
+	
+	<update id="updateServiceFee" parameterType="ServiceFee">
+		update servicefee 
+			set serviceFeeFid=#{serviceFeeFid},
+				serviceFeeCode=#{serviceFeeCode}, 
+				serviceFeeName=#{serviceFeeName}, 
+				serviceFeeMethod=#{serviceFeeMethod},
+				dayFeeType=#{dayFeeType}, 
+				dayFee=#{dayFee}, 
+				monthFeeType=#{monthFeeType}, 
+				monthFee=#{monthFee}, 
+				delayDay=#{delayDay},
+				isCalAttenDay=#{isCalAttenDay}
+		where serviceFeeID = #{serviceFeeID}
+	</update>
+	
+	<delete id="deleteServiceFee" parameterType="int">
+		delete from servicefee where serviceFeeID = #{id}
+	</delete>
+</mapper>

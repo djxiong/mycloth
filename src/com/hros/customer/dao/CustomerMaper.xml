@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+<mapper namespace="com.hros.customer.dao.CustomerDao" >
+	<select id="selectAllCustomer" resultType="Customer">
+		select * from Customer
+	</select>
+	
+	<select id="selectCustomer" parameterType="String" resultType="Customer">
+		select * from Customer where custID int (#{s})
+	</select>
+	
+	<select id="selectFilterCustomer" parameterType = "Map" resultType="Customer">
+		select * from Customer where  1=1
+		<if test="custAttr!=null">
+			and custAttr like #{custAttr}"%"
+		</if>
+		<if test="custCity!=null">
+			and custCity like #{custCity}"%"
+		</if>
+		<if test="custType!=null">
+			and custType like #{custType}"%"
+		</if>
+		<if test="custCode!=null">
+			and custCode like #{custCode}"%"
+		</if>
+	</select>
+	
+	<insert id="insertCustomer" parameterType="Customer" useGeneratedKeys="true" keyProperty="custID">
+		insert into 
+			Customer (fCustID, 
+					  custCode, 
+					  custName, 
+					  custLegalPerson, 
+					  address, 
+					  phone, 
+					  serviceFeeDelay,
+					  industry, 
+					  custClass, 
+					  custAttr, 
+					  remark, 
+					  custCity, 
+					  custType,
+					  serviceFeeID,
+					  wholeMonthAccount) 
+			values (#{fCustID}, 
+					#{custCode}, 
+					#{custName}, 
+					#{custLegalPerson}, 
+					#{address}, 
+					#{phone}, 
+					#{serviceFeeDelay}, 
+					#{industry}, 
+					#{custClass}, 
+					#{custAttr},
+					#{remark}, 
+					#{custCity}, 
+					#{custType},
+					#{serviceFeeID},
+					#{wholeMonthAccount})
+	</insert>
+	
+	<update id="updateCustomer" parameterType="Customer">
+		update Customer 
+			set fCustID=#{fCustID}, 
+				custCode=#{custCode}, 
+				custName=#{custName}, 
+				custLegalPerson=#{custLegalPerson}, 
+				address=#{address}, 
+				phone=#{phone}, 
+				serviceFeeDelay=#{serviceFeeDelay}, 
+				industry=#{industry}, 
+				custClass=#{custClass}, 
+				custAttr=#{custAttr}, 
+				remark=#{remark}, 
+				custCity=#{custCity}, 
+				custType=#{custType},
+				serviceFeeID=#{serviceFeeID},
+				wholeMonthAccount=#{wholeMonthAccount}
+		where custID = #{custID}
+	</update>
+	
+	<delete id="deleteCustomer" parameterType="int">
+		delete from Customer where custID = #{custID}
+	</delete>
+	
+	<select id="getCustomerByID" parameterType="int" resultType="Customer">
+		select * from Customer where custID=(#{s})
+	</select>
+</mapper>
